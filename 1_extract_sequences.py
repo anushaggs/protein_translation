@@ -170,7 +170,6 @@ def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index):
 
     return full_seq
 
-# TO DO -- figure out why we are getting (*) in the amino acid sequence
 def translate_to_protein(entrez_id, genic_sequence):
     seq = genic_sequence.replace('\n', '').replace(' ', '').upper()
 
