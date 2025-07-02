@@ -1,7 +1,12 @@
+#2_generate_esm_embeddings.py
 import argparse
 import pickle
 from models.esm_model import load_esm_model, get_esm_embeddings
 from Bio import SeqIO
+import torch
+
+import torch
+print("Torch imported successfully!", torch.__version__)
 
 def main(
     input_fasta: str,
