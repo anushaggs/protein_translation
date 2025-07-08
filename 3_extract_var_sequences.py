@@ -40,7 +40,7 @@ def load_vcf(vcf_path):
         dtype={"CHROM": str, "POS": int, "REF": str, "ALT": str}
     )
 
-    return vcf_df.head(50)
+    return vcf_df.head(50) # CHANGE THIS BEFORE PUSHING FINAL VERSION
 
 def extract_gene_regions(gtf_df):
     # filter to protein-coding genes and extract
@@ -140,7 +140,10 @@ def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index, vari
             return None
 
         exon_seq = genome[chrom][start - 1:end].seq.upper()
-        exon_seq = apply_variants_to_exon_seq(transcript_id, exon_seq, start, variants)
+
+        if variants:
+            print(f"Applying {len(variants)} variants to {transcript_id}", flush=True) 
+            exon_seq = apply_variants_to_exon_seq(transcript_id, exon_seq, start, variants)
 
         if i == 0:
             exon_seq = exon_seq[frame:]
@@ -297,6 +300,7 @@ if __name__ == "__main__":
     main(
         gtf_transcript_path,
         gtf_cds_path,
+        vcf_path,
         genome_fasta_dir,
         output_esm_fasta,
     )
