@@ -1,0 +1,155 @@
+<bound method NDFrame.head of       seqname      source     feature  ...  gene_id   transcript_id entrez_id
+0           1  BestRefSeq  transcript  ...    OR4F5  NM_001005484.2     79501
+1           1  BestRefSeq  transcript  ...   OR4F29  NM_001005221.2    729759
+2           1  BestRefSeq  transcript  ...   OR4F16  NM_001005277.1     81399
+3           1  BestRefSeq  transcript  ...   SAMD11  NM_001385641.1    148398
+4           1  BestRefSeq  transcript  ...    NOC2L     NM_015658.4     26155
+...       ...         ...         ...  ...      ...             ...       ...
+19161       Y  BestRefSeq  transcript  ...    BPY2B  NM_001002760.1    442867
+19162       Y  BestRefSeq  transcript  ...     DAZ3     NM_020364.4     57054
+19163       Y  BestRefSeq  transcript  ...     DAZ4  NM_001388484.1     57135
+19164       Y  BestRefSeq  transcript  ...    BPY2C  NM_001002761.1    442868
+19165       Y  BestRefSeq  transcript  ...     CDY1     NM_004680.3      9085
+
+[19166 rows x 12 columns]>
+<bound method NDFrame.head of     CHROM  ...  entrez_id
+0      19  ...       None
+1       9  ...       None
+2      22  ...       None
+3      22  ...       None
+4      11  ...       None
+..    ...  ...        ...
+195     1  ...       None
+196    19  ...       None
+197    17  ...       None
+198    17  ...       None
+199    18  ...       None
+
+[200 rows x 9 columns]>
+Total genes with variants: 169
+Attempting to process variants for gene 148398 with 2 variants
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (924432-924949)
+[NM_001385641.1] Variant 943718 not within exon window (924432-924949)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (925922-926014)
+[NM_001385641.1] Variant 943718 not within exon window (925922-926014)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (930155-930337)
+[NM_001385641.1] Variant 943718 not within exon window (930155-930337)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (931039-931090)
+[NM_001385641.1] Variant 943718 not within exon window (931039-931090)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (935772-935897)
+[NM_001385641.1] Variant 943718 not within exon window (935772-935897)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (939040-939130)
+[NM_001385641.1] Variant 943718 not within exon window (939040-939130)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (939275-939413)
+[NM_001385641.1] Variant 943718 not within exon window (939275-939413)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (941144-941307)
+[NM_001385641.1] Variant 943718 not within exon window (941144-941307)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (942136-942252)
+[NM_001385641.1] Variant 943718 not within exon window (942136-942252)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (942410-942489)
+[NM_001385641.1] Variant 943718 not within exon window (942410-942489)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (942559-943059)
+[NM_001385641.1] Variant 943718 not within exon window (942559-943059)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (943253-943378)
+[NM_001385641.1] Variant 943718 not within exon window (943253-943378)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (943698-943809)
+Applying 2 variants to NM_001385641.1
+[NM_001385641.1] Variant 939149 not within exon window (943908-944151)
+[NM_001385641.1] Variant 943718 not within exon window (943908-944151)
+Attempting to process variants for gene 126789 with 1 variants
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1308644-1308721)
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1308915-1308973)
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1309086-1309274)
+Applying 1 variants to NM_153339.3
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1309681-1309852)
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1310634-1310689)
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1310909-1311072)
+Applying 1 variants to NM_153339.3
+[NM_153339.3] Variant 1309516 not within exon window (1311330-1311377)
+Attempting to process variants for gene 23261 with 1 variants
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (6785531-6785576)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (6820181-6820251)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (6825092-6825211)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7091304-7091372)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7249491-7249627)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7467830-7467902)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7640400-7640554)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7661726-7661867)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7663353-7665200)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7670911-7671038)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7677599-7677734)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7732448-7732600)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7736344-7736541)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7736931-7737010)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7737255-7737571)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7737959-7738483)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7744835-7745023)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7745845-7746092)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7747710-7747782)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7751199-7751393)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7752459-7752534)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7755638-7755669)
+Applying 1 variants to NM_015215.4
+[NM_015215.4] Variant 7737674 not within exon window (7766459-7766489)
+Attempting to process variants for gene 2582 with 1 variants
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23798887-23799008)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23798615-23798731)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23798117-23798231)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23797695-23797872)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23797034-23797148)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23796876-23796943)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23796697-23796783)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23796509-23796587)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23796151-23796266)
+Applying 1 variants to NM_001008216.2
+[NM_001008216.2] Variant 23796695 not within exon window (23795952-23796008)

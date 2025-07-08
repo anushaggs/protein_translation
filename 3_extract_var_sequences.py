@@ -40,7 +40,8 @@ def load_vcf(vcf_path):
         dtype={"CHROM": str, "POS": int, "REF": str, "ALT": str}
     )
 
-    return vcf_df.head(50) # CHANGE THIS BEFORE PUSHING FINAL VERSION
+    #return vcf_df
+    return vcf_df.sample(n=200, random_state=42).reset_index(drop=True) # CHANGE THIS BEFORE PUSHING FINAL VERSION
 
 def extract_gene_regions(gtf_df):
     # filter to protein-coding genes and extract
@@ -119,6 +120,9 @@ def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index, vari
     cds_rows = cds_df.to_dict('records') # to preserve the order
     seq_parts = []
 
+    if variants:
+        applied_positions = set()
+
     for i, row in enumerate(cds_rows):
         start = row['start']
         end = row['end']
@@ -142,8 +146,14 @@ def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index, vari
         exon_seq = genome[chrom][start - 1:end].seq.upper()
 
         if variants:
-            print(f"Applying {len(variants)} variants to {transcript_id}", flush=True) 
-            exon_seq = apply_variants_to_exon_seq(transcript_id, exon_seq, start, variants)
+            exon_variants = [
+                (pos, ref, alt) for (pos, ref, alt) in variants
+                if start <= pos <= end
+            ]
+            applied_positions.update(pos for (pos, _, _) in exon_variants)
+            if exon_variants:
+                print(f"Applying {len(exon_variants)} variant(s) to {transcript_id} (exon {i+1})", flush=True)
+                exon_seq = apply_variants_to_exon_seq(transcript_id, exon_seq, start, exon_variants)
 
         if i == 0:
             exon_seq = exon_seq[frame:]
@@ -162,11 +172,19 @@ def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index, vari
         print(f"[{transcript_id}] Sequence empty after CDS extraction", flush=True)
         return None
 
+    if variants:
+        missed = [(pos, ref, alt) for (pos, ref, alt) in variants if pos not in applied_positions]
+        if missed:
+            print(f"[{transcript_id}] WARNING: {len(missed)} variants were NOT applied (did not overlap any CDS exon): {missed}", flush=True)
+
     return full_seq
 
 def annotate_vcf_with_entrez(vcf_df, gtf_df):
     # for each variant in the vcf file, find which gene it falls in using the gtf file
     # returns a new VCF file with "entrez_id" column
+
+    gtf_df = gtf_df.copy()
+    gtf_df['seqname'] = gtf_df['seqname'].astype(str).str.replace('chr', '', regex=False)
 
     vcf_df = vcf_df.copy()
     vcf_df['entrez_id'] = None
@@ -176,9 +194,9 @@ def annotate_vcf_with_entrez(vcf_df, gtf_df):
     for entrez_id, _, chrom, _, _, gene_start, gene_end in gene_regions:
         chrom = str(chrom)
         mask = (
-            (vcf_df['Chrom'] == chrom) &
-            (vcf_df['Pos'] >= gene_start) & 
-            (vcf_df['Pos'] <= gene_end)
+            (vcf_df['CHROM'] == chrom) &
+            (vcf_df['POS'] >= gene_start) & 
+            (vcf_df['POS'] <= gene_end)
         )
         vcf_df.loc[mask, 'entrez_id'] = entrez_id
 
@@ -191,15 +209,17 @@ def build_variant_dict_by_entrez(annotated_vcf):
     variant_dict = {}
     for _, row in annotated_vcf.iterrows():
         eid = str(row['entrez_id'])
-        pos = int(row['Pos'])
-        ref = row['Ref']
-        alt = row['Alt']
+        pos = int(row['POS'])
+        ref = row['REF']
+        alt = row['ALT']
         if pd.isnull(ref) or pd.isnull(alt):
             continue
 
         # only keep variants (single bp substitutions) -- no indels
         if len(ref) == 1 and len(alt) == 1 and ref != '-' and alt != '-':
             variant_dict.setdefault(eid, []).append((pos, ref, alt))
+
+    print(f"Total genes with variants: {len(variant_dict)}")
             
     return variant_dict
 
@@ -262,6 +282,7 @@ def main(
         
         # progress update
         if i % 1000 == 0 and i > 0:
+            print("\n" + "-" * 60, flush=True)
             print(f"Processed {i} genes/proteins...", flush=True)
             
         # gene sequence for translation for ESM input
@@ -272,6 +293,7 @@ def main(
             continue
         elif (wt_genic_sequence is not None) and (entrez_id in variant_dict):
             variants = variant_dict[entrez_id]
+            print(f"[{entrez_id}] Attempting to process variants for gene {entrez_id} with {len(variants)} variants", flush=True)
             var_genic_sequence = extract_cds_sequence(transcript_id, chrom, strand, gtf_cds, fasta_index, variants=variants)
             var_protein_sequence = translate_to_protein(entrez_id, var_genic_sequence, warning=False)
             if var_protein_sequence:

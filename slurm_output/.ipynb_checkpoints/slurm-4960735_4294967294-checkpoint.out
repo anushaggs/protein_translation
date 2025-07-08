@@ -1,0 +1,30 @@
+Total genes with variants: 0
+[57190] Internal stop codon found — skipping.
+[252995] Protein does not start with 'M' — skipping.
+[1733] Internal stop codon found — skipping.
+[NM_198719.2] Skipping — invalid CDS coordinates (70971733, 70971733)
+[9403] Internal stop codon found — skipping.
+[NM_001032291.3] Skipping — invalid CDS coordinates (109280156, 109280156)
+Processed 1000 genes/proteins...
+[NM_152263.4] Skipping — invalid CDS coordinates (154167940, 154167940)
+[NM_003851.3] Skipping — invalid CDS coordinates (167542301, 167542301)
+[NM_178527.4] Skipping — invalid CDS coordinates (173501097, 173501097)
+[80232] Protein does not start with 'M' — skipping.
+[149603] Protein does not start with 'M' — skipping.
+Processed 2000 genes/proteins...
+[NM_004850.5] Skipping — invalid CDS coordinates (11183440, 11183440)
+[85465] Internal stop codon found — skipping.
+[729967] Protein does not start with 'M' — skipping.
+[388946] Sequence length not divisible by 3 — skipping.
+Processed 3000 genes/proteins...
+[2876] Internal stop codon found — skipping.
+[NM_021237.5] Skipping — invalid CDS coordinates (53885561, 53885561)
+[8856] Protein does not start with 'M' — skipping.
+[114112] Protein does not start with 'M' — skipping.
+[NM_003571.4] Skipping — invalid CDS coordinates (133474969, 133474969)
+[51714] Internal stop codon found — skipping.
+Processed 4000 genes/proteins...
+[NM_022736.4] Skipping — invalid CDS coordinates (158828979, 158828979)
+[54965] Protein does not start with 'M' — skipping.
+[57620] Protein does not start with 'M' — skipping.
+[NM_001100399.2] Skipping — invalid CDS coordinates (39825488, 39825488)

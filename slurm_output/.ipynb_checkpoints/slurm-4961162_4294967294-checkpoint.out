@@ -1,0 +1,8 @@
+Total genes with variants: 169
+[148398] Attempting to process variants for gene 148398 with 2 variants
+Applying 1 variant(s) to NM_001385641.1 (exon 13)
+[NM_001385641.1] WARNING: 1 variants were NOT applied (did not overlap any CDS exon): [(939149, 'G', 'A')]
+[126789] Attempting to process variants for gene 126789 with 1 variants
+Applying 1 variant(s) to NM_153339.3 (exon 4)
+[23261] Attempting to process variants for gene 23261 with 1 variants
+[NM_015215.4] WARNING: 1 variants were NOT applied (did not overlap any CDS exon): [(7737674, 'T', 'A')]
