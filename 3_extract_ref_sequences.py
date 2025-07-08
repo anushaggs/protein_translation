@@ -180,11 +180,12 @@ def main(
 
     print("Fasta files written for sequence input into esm!")
 
+# PLEASE CHANGE THESE FILE PATHS
 if __name__ == "__main__":
     gtf_transcript_path = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv"
     gtf_cds_path = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv"
     genome_fasta_dir = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14"
-    output_esm_fasta = "/mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/esm_sequences.fasta"
+    output_esm_fasta = "/mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/esm_ref_sequences.fasta"
 
     main(
         gtf_transcript_path,
