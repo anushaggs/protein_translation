@@ -449,3 +449,46 @@ Processed 17000 genes/proteins...
 [NM_014931.4] Skipping — invalid CDS coordinates (55230531, 55230531)
 [10998] Attempting to process variants for gene 10998 with 1 variants
 Applying 1 variant(s) to NM_012254.3 (exon 1)
+[8455] Attempting to process variants for gene 8455 with 1 variants
+Applying 1 variant(s) to NM_139321.3 (exon 1)
+[80025] Protein does not start with 'M' — skipping.
+[3055] Protein does not start with 'M' — skipping.
+[6651] Attempting to process variants for gene 6651 with 1 variants
+Applying 1 variant(s) to NM_138927.4 (exon 3)
+[386681] Attempting to process variants for gene 386681 with 1 variants
+Applying 1 variant(s) to NM_198695.2 (exon 1)
+[80781] Attempting to process variants for gene 80781 with 1 variants
+Applying 1 variant(s) to NM_001379500.1 (exon 3)
+[8888] Attempting to process variants for gene 8888 with 1 variants
+Applying 1 variant(s) to NM_003906.5 (exon 13)
+[10587] Internal stop codon found — skipping.
+[6598] Attempting to process variants for gene 6598 with 1 variants
+Applying 1 variant(s) to NM_003073.5 (exon 7)
+[23384] Attempting to process variants for gene 23384 with 1 variants
+Applying 1 variant(s) to NM_015330.6 (exon 3)
+
+------------------------------------------------------------
+Processed 18000 genes/proteins...
+[11200] Attempting to process variants for gene 11200 with 1 variants
+Applying 1 variant(s) to NM_007194.4 (exon 12)
+[55000] Protein does not start with 'M' — skipping.
+[140606] Internal stop codon found — skipping.
+[4627] Attempting to process variants for gene 4627 with 1 variants
+Applying 1 variant(s) to NM_002473.6 (exon 4)
+[10521] Protein does not start with 'M' — skipping.
+[9929] Attempting to process variants for gene 9929 with 1 variants
+Applying 1 variant(s) to NM_001360236.2 (exon 3)
+[23467] Protein does not start with 'M' — skipping.
+[57591] Protein does not start with 'M' — skipping.
+[83642] Internal stop codon found — skipping.
+[6103] Attempting to process variants for gene 6103 with 1 variants
+Applying 1 variant(s) to NM_001034853.2 (exon 15)
+[8573] Attempting to process variants for gene 8573 with 1 variants
+Applying 1 variant(s) to NM_001367721.1 (exon 27)
+[NM_145799.4] Skipping — invalid CDS coordinates (119625379, 119625379)
+
+------------------------------------------------------------
+Processed 19000 genes/proteins...
+[3054] Attempting to process variants for gene 3054 with 1 variants
+[NM_005334.3] WARNING: 1 variants were NOT applied (did not overlap any CDS exon): [(153950227, 'C', 'T')]
+Fasta files written for sequence input into esm!

@@ -1,0 +1,5 @@
+# Ignore all files in slurm_output
+slurm_output/*
+
+# Keep the directory itself
+!slurm_output/.gitkeep
