@@ -78,6 +78,8 @@ python 1_extract_ref_sequences.py \
 **Description**  
 Extracts and translates coding sequences (CDS) from canonical transcripts in a GTF file using a genome FASTA reference. For transcripts that have variants (from a VCF file), it applies the variants and outputs translated variant protein sequences. For transcripts without any associated variants, it outputs their reference (wild-type) protein sequences. All outputs are formatted for ESM input. CPU-only task.
 
+Variants are limited to single bp substitutions. Indels are not handeled.
+
 **Inputs**
 - Transcript-level GTF file (`*_transcript_final_gtf.csv`)
 - CDS-level GTF file (`*_CDS_final_gtf.csv`)
