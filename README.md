@@ -49,8 +49,72 @@ Unzip the processed GTF files:
 unzip -n 'resources/*.zip' -d resources/
 ```
 
-## Scripts
+## Scripts overview
 
+### `1_extract_ref_sequences.py`
 
-change the file paths to resources 
-cahnge the slurm output files so its not in the main script
+**Description**  
+Extracts reference coding sequences (CDS) for canonical transcripts and translates them into protein sequences using the hg38.p14 reference genome.
+
+**Inputs**
+- Transcript-level GTF file (`*_transcript_final_gtf.csv`)
+- CDS-level GTF file (`*_CDS_final_gtf.csv`)
+- Genome FASTA directory (with per-chromosome `.fa` files)
+
+**Output**
+- FASTA file of reference protein sequences formatted for ESM input
+
+**Usage**
+```bash
+python 1_extract_ref_sequences.py \
+  --gtf_transcript_path resources/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv \
+  --gtf_cds_path resources/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv \
+  --genome_fasta_dir path/to/genome_fasta/ \
+  --output_esm_fasta output/esm_ref_sequences.fasta
+```
+
+### `2_extract_var_sequences.py`
+
+**Description**  
+Extracts and translates coding sequences (CDS) from canonical transcripts in a GTF file using a genome FASTA reference. For transcripts that have variants (from a VCF file), it applies the variants and outputs translated variant protein sequences. For transcripts without any associated variants, it outputs their reference (wild-type) protein sequences. All outputs are formatted for ESM input.
+
+**Inputs**
+- Transcript-level GTF file (`*_transcript_final_gtf.csv`)
+- CDS-level GTF file (`*_CDS_final_gtf.csv`)
+- Genome FASTA directory (with per-chromosome `.fa` files)
+- VCF file (`.vcf`file)
+
+**Output**
+- FASTA file of translated protein sequences:
+  - Variant protein sequences for transcripts with mapped single-nucleotide variants (SNVs)
+    - Variants are listed in the header (e.g., `>12345|chr7:g.117199644A>G`)
+  - Reference protein sequences for transcripts with **no variants**
+
+**Usage**
+```bash
+python 2_extract_var_sequences.py \
+  --gtf_transcript_path resources/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv \
+  --gtf_cds_path resources/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv \
+  --vcf_path /path/to/variants.vcf \
+  --genome_fasta_dir /path/to/fasta_dir \
+  --output_esm_fasta /path/to/output_variant_sequences.fasta
+```
+
+### `3_generate_esm_embeddings.py`
+
+**Description**  
+Takes the reference or variant FASTA sequences and computes ESM model embeddings for downstream tasks.
+
+**Inputs**
+- FASTA file from `1_extract_ref_sequences.py` or `2_extract_var_sequences.py`
+
+**Output**
+- Pickled dictionary of ESM embeddings (CLS token only)
+- For protein sequences longer than 2048, the proteins are chunked and averaged
+
+**Usage**
+```bash
+python 3_generate_esm_embeddings.py \
+  --input_fasta output/esm_ref_sequences.fasta \
+  --output_pkl output/esm_ref_embeddings.fasta 
+```
