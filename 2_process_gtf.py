@@ -1,3 +1,4 @@
+# 2_process_gtf.py
 import pandas as pd
 
 # processing the GTF file with CDS, start codons, and stop codon regions

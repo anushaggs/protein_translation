@@ -9,4 +9,4 @@
 #SBATCH --mail-type=fail          # send mail if job fails
 #SBATCH --mail-user=aa8417@princeton.edu
 
-python 0.2_process_gtf.py
+python 2_process_gtf.py

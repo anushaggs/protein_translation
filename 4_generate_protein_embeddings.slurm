@@ -18,6 +18,6 @@ module purge
 
 conda activate target-genes
 
-python 2_generate_esm_embeddings.py \
+python 4_generate_esm_embeddings.py \
   --input_fasta /mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/esm_sequences.fasta \
   --output_pkl /mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/raw_embeddings/esm_embeddings.fasta 
