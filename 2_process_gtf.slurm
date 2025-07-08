@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=process_gtf         # create a short name for your job
-#SBATCH --output=/mnt/home/aaggarwal/gates_proj/target_genes/slurm_outputs/slurm-%A_%a.out  # stdout file
+#SBATCH --output=/mnt/home/aaggarwal/gates_proj/protein_translation/slurm_output/slurm-%A_%a.out  # stdout file
 #SBATCH --nodes=1                 # request one node
 #SBATCH --time=15:00         # set the maximum runtime (1 day)
 #SBATCH --mem=512G                 # request 16GB of memory (adjust as needed)

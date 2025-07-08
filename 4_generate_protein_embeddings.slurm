@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=get_protein_embed    # create a short name for your job
-#SBATCH --output=/mnt/home/aaggarwal/gates_proj/target_genes/slurm_outputs/slurm-%A_%a.out
+#SBATCH --output=//mnt/home/aaggarwal/gates_proj/protein_translation/slurm_output/slurm-%A_%a.out
 #SBATCH --gres=gpu:1  # request 4 GPUs
 #SBATCH --constraint=a100-80gb&sxm4
 #SBATCH --partition=gpu
