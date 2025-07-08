@@ -5,16 +5,19 @@ from models.esm_model import load_esm_model, get_esm_embeddings
 from Bio import SeqIO
 import torch
 
-import torch
-print("Torch imported successfully!", torch.__version__)
-
 def main(
     input_fasta: str,
     output_pkl: str,
     model_name: str = "esmc_600m",
     batch_size: int = 32,
-    device: str = "cuda"
+    device: str = None
 ):
+
+    # detect the device
+    if device is None:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using device: {device}")
+    
     # load ESM model
     esm_model = load_esm_model(model_name=model_name, device=device)
 
@@ -62,7 +65,7 @@ if __name__ == "__main__":
     parser.add_argument("--input_fasta", required=True, help="Input FASTA file of protein sequences")
     parser.add_argument("--output_pkl", required=True, help="Output pickle file for embeddings")
     parser.add_argument("--model_name", default="esmc_600m", help="ESM model variant")
-    parser.add_argument("--device", default="cuda", help="Device to run on")
+    parser.add_argument("--device", help="Device to run on (auto-detected if not specified)")
     args = parser.parse_args()
 
     main(

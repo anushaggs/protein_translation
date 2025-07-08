@@ -1,3 +1,4 @@
+# 1_extract_sequences.py
 import torch
 import pickle
 from typing import List, Optional
@@ -5,6 +6,8 @@ import pandas as pd
 from Bio.Seq import Seq
 from pyfaidx import Fasta
 import os
+
+# Runs on CPU
 
 def load_gtf(gtf_path):
     # load the GTF as pandas dataframe
