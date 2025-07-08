@@ -39,59 +39,6 @@ def extract_gene_regions(gtf_df):
     
     return zip(entrez_id, transcript_id, chrom, strand, tss, gene_start, gene_end)
 
-def extract_tss_sequences(entrez_id, chrom, tss, strand, fasta_index, beluga_window=41_800, seqweaver_window=1_000):
-    # given the chromosome, strand, and the TSS, extract sequence +/- window size
-    # return None if invalid
-
-    # if the chromosome in the gtf is not found in the fasta files, skip it
-    # make sure the chromosome files are aligned with those in the gtf file
-    if chrom not in fasta_index:
-            print(f"Skipping gene {entrez_id} — no FASTA for {chrom}", flush=True)
-            return None, None
-    
-    genome = fasta_index[chrom]
-    chrom_len = len(genome[chrom])
-
-    # get the sequence start and end site from the genome and extract the sequence
-    # adjust boundaries if close to the edge of the chromosome
-    def get_window_sequence(center, length):
-        half = length // 2
-        seq_start = center - half
-        seq_end = center + half
-    
-        if seq_start < 0:
-                seq_end += abs(seq_start)
-                seq_start = 0
-        if seq_end > chrom_len:
-            shift = seq_end - chrom_len
-            seq_start -= shift
-            seq_end = chrom_len
-            if seq_start < 0:
-                print(f"Skipping {entrez_id} — cannot fit full window on chromosome", flush=True)
-                return None
-    
-        # make the sequence uppercase for consistency
-        seq = genome[chrom][seq_start:seq_end].seq.upper()
-    
-        # make sure the length lines up
-        if len(seq) != length:
-                print(f"Skipping gene {entrez_id} — final length {len(seq)}", flush=True)
-                return None
-
-        return seq
-
-    # get beluga and seweaver embeddings
-    seq_beluga = get_window_sequence(tss, beluga_window)
-    seq_seqweaver = get_window_sequence(tss, seqweaver_window)
-
-    # get the reverse complement of the sequence if the strand is negative
-    if strand == '-' and seq_beluga is not None:
-        seq_beluga = str(Seq(seq_beluga).reverse_complement())
-    if strand == '-' and seq_seqweaver is not None:
-        seq_seqweaver = str(Seq(seq_seqweaver).reverse_complement())
-    
-    return seq_beluga, seq_seqweaver
-
 def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index):
     transcript_df = cds_df[cds_df['transcript_id'] == transcript_id]
     cds_df = transcript_df[transcript_df['feature'] == 'CDS']
@@ -197,8 +144,6 @@ def main(
     gtf_cds_path: str,
     genome_fasta_dir: str,
     output_esm_fasta: str,
-    output_beluga_fasta: str,
-    output_seqweaver_fasta: str,
 ):
     # load the genome
     fasta_files = {
@@ -216,15 +161,13 @@ def main(
 
     # output file handles
     esm_out = open(output_esm_fasta, "w")
-    beluga_out = open(output_beluga_fasta, "w")
-    seqweaver_out = open(output_seqweaver_fasta, "w")
 
     # iterate through genes and get genomic & protein sequences
     for i, (entrez_id, transcript_id, chrom, strand, tss, gene_start, gene_end) in enumerate(gene_regions):
         
         # progress update
         if i % 1000 == 0 and i > 0:
-            print(f"Processed {i} genes...", flush=True)
+            print(f"Processed {i} genes/proteins...", flush=True)
             
         # protein sequence (for ESM)
         genic_sequence = extract_cds_sequence(transcript_id, chrom, strand, gtf_cds, fasta_index)
@@ -233,35 +176,19 @@ def main(
             if protein_sequence:
                esm_out.write(f">{entrez_id}\n{protein_sequence}\n")
 
-        # TSS-centered sequence (for Beluga & Seqweaver)
-        seq_beluga, seq_seqweaver = extract_tss_sequences(
-            entrez_id, chrom, tss, strand, fasta_index
-        )
-        
-        if seq_beluga:
-            beluga_out.write(f">{entrez_id}\n{seq_beluga}\n")
-
-        if seq_seqweaver:
-            seqweaver_out.write(f">{entrez_id}\n{seq_seqweaver}\n")
-
     esm_out.close()
-    beluga_out.close()
-    seqweaver_out.close()
-    print("Fasta files written for sequence input into esm, beluga, and seqweaver!")
+
+    print("Fasta files written for sequence input into esm!")
 
 if __name__ == "__main__":
     gtf_transcript_path = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv"
     gtf_cds_path = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv"
     genome_fasta_dir = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14"
     output_esm_fasta = "/mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/esm_sequences.fasta"
-    output_beluga_fasta = "/mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/beluga_sequences.fasta"
-    output_seqweaver_fasta = "/mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/seqweaver_sequences.fasta"
 
     main(
         gtf_transcript_path,
         gtf_cds_path,
         genome_fasta_dir,
         output_esm_fasta,
-        output_beluga_fasta,
-        output_seqweaver_fasta,
     )
