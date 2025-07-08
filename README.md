@@ -1,7 +1,7 @@
 # 🧬 protein_translation
 Translating genes to protein sequences using gene annotation files (GTFs) and the ESM model.
 
-## Set up environment
+## Set up environment (with GPU)
 
 #### Option A: from 'environment.yml' file
 
@@ -54,7 +54,7 @@ unzip -n 'resources/*.zip' -d resources/
 ### `1_extract_ref_sequences.py`
 
 **Description**  
-Extracts reference coding sequences (CDS) for canonical transcripts and translates them into protein sequences using the hg38.p14 reference genome.
+Extracts reference coding sequences (CDS) for canonical transcripts and translates them into protein sequences using the hg38.p14 reference genome. CPU-only task.
 
 **Inputs**
 - Transcript-level GTF file (`*_transcript_final_gtf.csv`)
@@ -76,7 +76,7 @@ python 1_extract_ref_sequences.py \
 ### `2_extract_var_sequences.py`
 
 **Description**  
-Extracts and translates coding sequences (CDS) from canonical transcripts in a GTF file using a genome FASTA reference. For transcripts that have variants (from a VCF file), it applies the variants and outputs translated variant protein sequences. For transcripts without any associated variants, it outputs their reference (wild-type) protein sequences. All outputs are formatted for ESM input.
+Extracts and translates coding sequences (CDS) from canonical transcripts in a GTF file using a genome FASTA reference. For transcripts that have variants (from a VCF file), it applies the variants and outputs translated variant protein sequences. For transcripts without any associated variants, it outputs their reference (wild-type) protein sequences. All outputs are formatted for ESM input. CPU-only task.
 
 **Inputs**
 - Transcript-level GTF file (`*_transcript_final_gtf.csv`)
@@ -103,7 +103,7 @@ python 2_extract_var_sequences.py \
 ### `3_generate_esm_embeddings.py`
 
 **Description**  
-Takes the reference or variant FASTA sequences and computes ESM model embeddings for downstream tasks.
+Takes the reference or variant FASTA sequences and computes ESM model embeddings for downstream tasks. CPU or GPU task (GPU will automatically get detected by the script).
 
 **Inputs**
 - FASTA file from `1_extract_ref_sequences.py` or `2_extract_var_sequences.py`
