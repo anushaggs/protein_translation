@@ -27,13 +27,30 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 ```
 💡 For CPU-only systems, you can omit the '--index-url' flag
 
-Step 1: Load the conda env
+## Project setup
 
-Step 2: Get the genome fasta file and separate into chromosomes
+#### Step 1
+Download the hg38.p14 reference genome FASTA file from NCBI:
 
-Step 3: unzip the gtf files in resources
+```bash
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
+gunzip GCF_000001405.40_GRCh38.p14_genomic.fna.gz
+```
 
-Run 1, 2, 3, 
+#### Step 2
+Generate process the fasta file by splitting the chromosomes (only want the main ones):
+```bash
+python 0_split_chroms.py /path/to/GCF_000001405.40_GRCh38.p14_genomic.fna
+```
+
+#### Step 3
+Unzip the processed GTF files:
+```bash
+unzip -n 'resources/*.zip' -d resources/
+```
+
+## Scripts
+
 
 change the file paths to resources 
 cahnge the slurm output files so its not in the main script

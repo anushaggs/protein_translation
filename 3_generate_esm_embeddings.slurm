@@ -19,5 +19,5 @@ module purge
 conda activate target-genes
 
 python 3_generate_esm_embeddings.py \
-  --input_fasta /mnt/home/aaggarwal/ceph/gates_proj/testing_protein_translation/esm_ref_sequences.fasta \
-  --output_pkl /mnt/home/aaggarwal/ceph/gates_proj/testing_protein_translation/esm_ref_embeddings.fasta 
+  --input_fasta output/esm_ref_sequences.fasta \
+  --output_pkl output/esm_ref_embeddings.fasta 

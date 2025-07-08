@@ -3,3 +3,9 @@ slurm_output/*
 
 # Keep the directory itself
 !slurm_output/.gitkeep
+
+# Ignore all files in the output directory
+output/*
+
+# But keep the directory itself
+!output/.gitkeep

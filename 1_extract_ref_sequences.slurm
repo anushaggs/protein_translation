@@ -9,4 +9,8 @@
 #SBATCH --mail-type=fail          # send mail if job fails
 #SBATCH --mail-user=aa8417@princeton.edu
 
-python 1_extract_ref_sequences.py
+python 1_extract_ref_sequences.py \
+  --gtf_transcript_path resources/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv \
+  --gtf_cds_path resources/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv \
+  --genome_fasta_dir path/to/genome_fasta/ \
+  --output_esm_fasta output/esm_ref_sequences.fasta

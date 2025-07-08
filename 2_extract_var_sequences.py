@@ -6,6 +6,7 @@ import pandas as pd
 from Bio.Seq import Seq
 from pyfaidx import Fasta
 import os
+import argparse
 
 # Runs on CPU
 
@@ -312,16 +313,20 @@ def main(
     print("Fasta files written for sequence input into esm!")
 
 if __name__ == "__main__":
-    gtf_transcript_path = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv"
-    gtf_cds_path = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv"
-    vcf_path = "/mnt/home/aaggarwal/ceph/gates_proj/testing_protein_translation/clinvar_20250706.vcf"
-    genome_fasta_dir = "/mnt/home/aaggarwal/ceph/gates_proj/ncbi_genome_hg38.p14"
-    output_esm_fasta = "/mnt/home/aaggarwal/ceph/gates_proj/testing_protein_translation/esm_var_sequences.fasta"
+    parser = argparse.ArgumentParser(description="Extract variant protein sequences using GTF, VCF, and genome FASTA.")
+    
+    parser.add_argument("--gtf_transcript_path", default="resources/hg38.p14.ncbiRefSeq.transcript_final_gtf.csv", help="Path to transcript-level GTF CSV")
+    parser.add_argument("--gtf_cds_path", default="resources/hg38.p14.ncbiRefSeq.CDS_final_gtf.csv", help="Path to CDS-level GTF CSV")
+    parser.add_argument("--vcf_path", default="resources/clinvar_20250706.vcf", help="Path to input VCF file")
+    parser.add_argument("--genome_fasta_dir", default="resources/genome_fasta/", help="Directory containing chromosome FASTA files")
+    parser.add_argument("--output_esm_fasta", default="output/esm_var_sequences.fasta", help="Output path for ESM-ready variant FASTA")
+
+    args = parser.parse_args()
 
     main(
-        gtf_transcript_path,
-        gtf_cds_path,
-        vcf_path,
-        genome_fasta_dir,
-        output_esm_fasta,
+        args.gtf_transcript_path,
+        args.gtf_cds_path,
+        args.vcf_path,
+        args.genome_fasta_dir,
+        args.output_esm_fasta,
     )
