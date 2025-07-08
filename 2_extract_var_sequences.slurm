@@ -9,4 +9,4 @@
 #SBATCH --mail-type=fail          # send mail if job fails
 #SBATCH --mail-user=aa8417@princeton.edu
 
-python 1_extract_var_sequences.py
+python 2_extract_var_sequences.py

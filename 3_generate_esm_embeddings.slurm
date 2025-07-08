@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=get_protein_embed    # create a short name for your job
+#SBATCH --job-name=get_esm_embed    # create a short name for your job
 #SBATCH --output=//mnt/home/aaggarwal/gates_proj/protein_translation/slurm_output/slurm-%A_%a.out
 #SBATCH --gres=gpu:1  # request 4 GPUs
 #SBATCH --constraint=a100-80gb&sxm4
@@ -19,5 +19,5 @@ module purge
 conda activate target-genes
 
 python 3_generate_esm_embeddings.py \
-  --input_fasta /mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/fasta_files/esm_sequences.fasta \
-  --output_pkl /mnt/home/aaggarwal/ceph/gates_proj/GNN_model_files/raw_embeddings/esm_embeddings.fasta 
+  --input_fasta /mnt/home/aaggarwal/ceph/gates_proj/testing_protein_translation/esm_ref_sequences.fasta \
+  --output_pkl /mnt/home/aaggarwal/ceph/gates_proj/testing_protein_translation/esm_ref_embeddings.fasta 

@@ -1,0 +1,7 @@
+conda create -n protein-env python=3.10 -y
+conda activate protein-env
+
+pip install pandas numpy biopython pyfaidx esm
+
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+
