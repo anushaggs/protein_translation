@@ -199,25 +199,22 @@ def extract_cds_sequence(transcript_id, chrom, strand, cds_df, fasta_index, vari
     if not full_seq:
         print(f"[{transcript_id}] Sequence empty after CDS extraction", flush=True)
         return None
-
+        
+    '''
     if variants:
         missed = [(pos, ref, alt) for (pos, ref, alt) in variants if pos not in applied_positions]
         if missed:
             print(f"[{transcript_id}] WARNING: {len(missed)} variants were NOT applied (did not overlap any CDS exon): {missed}", flush=True)
+    '''
 
     return full_seq
 
-def annotate_vcf_with_entrez(vcf_df, gtf_df):
+def annotate_vcf_with_entrez(vcf_df, gene_regions):
     # for each variant in the vcf file, find which gene it falls in using the gtf file
     # returns a new VCF file with "entrez_id" column
 
-    gtf_df = gtf_df.copy()
-    gtf_df['seqname'] = gtf_df['seqname'].astype(str).str.replace('chr', '', regex=False)
-
     vcf_df = vcf_df.copy()
     vcf_df['entrez_id'] = None
-
-    gene_regions = extract_gene_regions(gtf_df)
 
     for i, (entrez_id, _, chrom, _, _, gene_start, gene_end) in enumerate(gene_regions):
         chrom = str(chrom)
@@ -298,7 +295,7 @@ def main(
 
     # get gene regions for transcripts
     print('extracting gene regions', flush=True)
-    gene_regions = extract_gene_regions(gtf_transcripts)
+    gene_regions = list(extract_gene_regions(gtf_transcripts))
 
     # load VCF
     print('extracting vcf file', flush=True)
@@ -306,9 +303,9 @@ def main(
 
     # filer the vcf to variants/indels in gene regions and organize the variants per gene
     print('filtering to variants in the genic regions', flush=True)
-    annotated_vcf = annotate_vcf_with_entrez(vcf, gtf_transcripts)
+    annotated_vcf = annotate_vcf_with_entrez(vcf, gene_regions)
 
-    print('building variant dict', flush=true)
+    print('building variant dict', flush=True)
     variant_dict = build_variant_dict_by_entrez(annotated_vcf)
 
     # output file handles
