@@ -308,7 +308,7 @@ def main(
     print('filtering to variants in the genic regions', flush=True)
     annotated_vcf = annotate_vcf_with_entrez(vcf, gtf_transcripts)
 
-    print('building variant dict', flush=true)
+    print('building variant dict', flush=True)
     variant_dict = build_variant_dict_by_entrez(annotated_vcf)
 
     # output file handles
