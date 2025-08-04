@@ -7,6 +7,8 @@ from Bio.Seq import Seq
 from pyfaidx import Fasta
 import os
 import argparse
+import gzip
+import time
 
 # Runs on CPU
 
@@ -22,6 +24,7 @@ def load_gtf(gtf_path):
 
     return gtf_df
 
+'''
 def load_vcf(vcf_path):
     # load the VCF file
     # works with ClinVar's VCF format
@@ -43,6 +46,30 @@ def load_vcf(vcf_path):
 
     #return vcf_df
     return vcf_df.sample(n=200, random_state=42).reset_index(drop=True) # CHANGE THIS BEFORE PUSHING FINAL VERSION
+'''
+
+def load_vcf(vcf_path):
+    # load the VCF file
+    # works with DepMap's unfiltered VCF format
+
+    open_fn = gzip.open if vcf_path.endswith(".gz") else open
+    with open_fn(vcf_path, 'rt') as f:
+        for line in f:
+            if line.startswith("#CHROM"):
+                header = line.strip().lstrip("#").split("\t")
+                break
+
+    df = pd.read_csv(
+        vcf_path,
+        sep="\t",
+        comment="#",
+        names=header,
+        compression='gzip' if vcf_path.endswith(".gz") else None,
+        dtype={"CHROM": str, "POS": int, "REF": str, "ALT": str}
+    )
+
+    snps = df[(df["REF"].str.len() == 1) & (df["ALT"].str.len() == 1)]
+    return snps
 
 def extract_gene_regions(gtf_df):
     # filter to protein-coding genes and extract
@@ -192,7 +219,7 @@ def annotate_vcf_with_entrez(vcf_df, gtf_df):
 
     gene_regions = extract_gene_regions(gtf_df)
 
-    for entrez_id, _, chrom, _, _, gene_start, gene_end in gene_regions:
+    for i, (entrez_id, _, chrom, _, _, gene_start, gene_end) in enumerate(gene_regions):
         chrom = str(chrom)
         mask = (
             (vcf_df['CHROM'] == chrom) &
@@ -200,6 +227,9 @@ def annotate_vcf_with_entrez(vcf_df, gtf_df):
             (vcf_df['POS'] <= gene_end)
         )
         vcf_df.loc[mask, 'entrez_id'] = entrez_id
+
+        if i % 1000 == 0 and i > 0:
+                print(f"[PROGRESS] Annotated {i} genes...", flush=True)
 
     return vcf_df[vcf_df['entrez_id'].notnull()].copy()
 
@@ -262,23 +292,30 @@ def main(
     fasta_index = {k: Fasta(v) for k, v in fasta_files.items()}
 
     # load GTF
+    print('loading gtf file', flush=True)
     gtf_transcripts = load_gtf(gtf_transcript_path)
     gtf_cds = load_gtf(gtf_cds_path)
 
     # get gene regions for transcripts
+    print('extracting gene regions', flush=True)
     gene_regions = extract_gene_regions(gtf_transcripts)
 
     # load VCF
+    print('extracting vcf file', flush=True)
     vcf = load_vcf(vcf_path)
 
     # filer the vcf to variants/indels in gene regions and organize the variants per gene
+    print('filtering to variants in the genic regions', flush=True)
     annotated_vcf = annotate_vcf_with_entrez(vcf, gtf_transcripts)
+
+    print('building variant dict', flush=true)
     variant_dict = build_variant_dict_by_entrez(annotated_vcf)
 
     # output file handles
     esm_out = open(output_esm_fasta, "w")
 
     # iterate through genes and get genomic & protein sequences
+    print('inserting variants', flush=True)
     for i, (entrez_id, transcript_id, chrom, strand, tss, gene_start, gene_end) in enumerate(gene_regions):
         
         # progress update
